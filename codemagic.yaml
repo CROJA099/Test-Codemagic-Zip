@@ -24,7 +24,11 @@ workflows:
       - name: Change Android app name
         script: sed -i.bak "s/android:label=\".*\"/android:label=\"$APP_NAME\"/g" android/app/src/main/AndroidManifest.xml
 
+      - name: Unzip Nissan icons
+        script: unzip -o assets/zips/assets_nissan.zip -d android/app/src/main/res/
+
       - flutter build apk
+
     artifacts:
       - build/**/outputs/apk/**/*.apk
 
@@ -66,10 +70,11 @@ workflows:
       - name: Change Android app name
         script: sed -i.bak "s/android:label=\".*\"/android:label=\"$APP_NAME\"/g" android/app/src/main/AndroidManifest.xml
       
-      - name: Unzip Mazda icons
-        script: unzip -o assets/zips/assets_mazda.zip -d android/app/src/main/res/
+      - name: Unzip Nissan icons
+        script: unzip -o assets/zips/assets_nissan.zip -d android/app/src/main/res/
 
       - flutter build apk
+      
     artifacts:
       - build/**/outputs/apk/**/*.apk
 
