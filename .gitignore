@@ -44,5 +44,10 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-codemagic.yaml
-assets/*
+
+
+/android/app/src/*
+assets/icons/*
+assets/backgrounds/*
+
+ios/Runner/Assets.xcassets/AppIcon.appiconset/*

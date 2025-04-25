@@ -1,0 +1,87 @@
+workflows:
+  mazda_android:
+    name: Mazda APK Workflow
+    environment:
+      flutter: stable
+      android_signing:
+        - mazda_key
+      groups:
+        - Mazda 
+      
+    scripts:
+      - flutter clean
+      - flutter pub get
+
+      - name: Decode Keystore
+        script: |
+          cat >> "$CM_BUILD_DIR/project_directory/android/key.properties" <<EOF
+          storePassword=$CM_KEYSTORE_PASSWORD
+          keyPassword=$CM_KEY_PASSWORD
+          keyAlias=$CM_KEY_ALIAS
+          storeFile=$CM_KEYSTORE_PATH
+          EOF 
+
+      - name: Change Android app name
+        script: sed -i.bak "s/android:label=\".*\"/android:label=\"$APP_NAME\"/g" android/app/src/main/AndroidManifest.xml
+
+      - flutter build apk --flavor=mazda --dart-define-from-file=.env/mazda.env
+    artifacts:
+      - build/**/outputs/apk/**/*.apk
+
+  mazda_ios:
+    name: Mazda IPA Workflow
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+      groups:
+        - Mazda 
+    scripts:
+      - flutter clean
+      - flutter pub get
+      - flutter build ipa --flavor=mazda --dart-define-from-file=.env/mazda.env
+    artifacts:
+      - build/ios/ipa/*.ipa
+
+  nissan_android:
+    name: Nissan APK Workflow
+    environment:
+      flutter: stable
+      groups:
+        - Nissan 
+      
+    scripts:
+      - flutter clean
+      - flutter pub get
+
+      - name: Decode Keystore
+        script: |
+          echo "$KEYSTORE_FILE" | base64 --decode > "$KEYSTORE_PATH"          
+
+          echo "Generating key.properties..."
+          cat >> "$CM_BUILD_DIR/android/key.properties" <<EOF
+          storePassword=$KEYSTORE_PASSWORD
+          keyPassword=$KEY_PASSWORD
+          keyAlias=$KEY_ALIAS
+          storeFile=$KEYSTORE_PATH
+          EOF
+
+      - name: Change Android app name
+        script: sed -i.bak "s/android:label=\".*\"/android:label=\"$APP_NAME\"/g" android/app/src/main/AndroidManifest.xml
+
+      - flutter build apk --flavor=nissan --dart-define-from-file=.env/nissan.env
+    artifacts:
+      - build/**/outputs/apk/**/*.apk
+
+  nissan_ios:
+    name: Nissan IPA Workflow
+    environment:
+      flutter: stable
+      groups:
+        - Nissan 
+    scripts:
+      - flutter clean
+      - flutter pub get
+      - flutter build ipa --flavor=nissan --dart-define-from-file=.env/nissan.env
+    artifacts:
+      - build/ios/ipa/*.ipa
