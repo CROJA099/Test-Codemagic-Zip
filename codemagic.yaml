@@ -27,6 +27,10 @@ workflows:
       - name: Unzip Mazda icons
         script: unzip -o assets/zips/assets_mazda.zip -d android/app/src/main/res/
 
+      - name: Validate icons
+        script: ls -R android/app/src/main/res/mipmap-*
+  
+
       - flutter build apk
 
     artifacts:
