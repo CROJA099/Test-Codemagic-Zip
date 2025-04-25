@@ -24,7 +24,7 @@ workflows:
       - name: Change Android app name
         script: sed -i.bak "s/android:label=\".*\"/android:label=\"$APP_NAME\"/g" android/app/src/main/AndroidManifest.xml
 
-      - flutter build apk --flavor=mazda --dart-define-from-file=.env/mazda.env
+      - flutter build apk
     artifacts:
       - build/**/outputs/apk/**/*.apk
 
@@ -39,7 +39,7 @@ workflows:
     scripts:
       - flutter clean
       - flutter pub get
-      - flutter build ipa --flavor=mazda --dart-define-from-file=.env/mazda.env
+      - flutter build ipa
     artifacts:
       - build/ios/ipa/*.ipa
 
@@ -56,20 +56,20 @@ workflows:
 
       - name: Decode Keystore
         script: |
-          echo "$KEYSTORE_FILE" | base64 --decode > "$KEYSTORE_PATH"          
-
-          echo "Generating key.properties..."
-          cat >> "$CM_BUILD_DIR/android/key.properties" <<EOF
-          storePassword=$KEYSTORE_PASSWORD
-          keyPassword=$KEY_PASSWORD
-          keyAlias=$KEY_ALIAS
-          storeFile=$KEYSTORE_PATH
+          cat >> "$CM_BUILD_DIR/project_directory/android/key.properties" <<EOF
+          storePassword=$CM_KEYSTORE_PASSWORD
+          keyPassword=$CM_KEY_PASSWORD
+          keyAlias=$CM_KEY_ALIAS
+          storeFile=$CM_KEYSTORE_PATH
           EOF
 
       - name: Change Android app name
         script: sed -i.bak "s/android:label=\".*\"/android:label=\"$APP_NAME\"/g" android/app/src/main/AndroidManifest.xml
+      
+      - name: Unzip Mazda icons
+        script: unzip -o assets/zips/assets_mazda.zip -d android/app/src/main/res/
 
-      - flutter build apk --flavor=nissan --dart-define-from-file=.env/nissan.env
+      - flutter build apk
     artifacts:
       - build/**/outputs/apk/**/*.apk
 
@@ -82,6 +82,6 @@ workflows:
     scripts:
       - flutter clean
       - flutter pub get
-      - flutter build ipa --flavor=nissan --dart-define-from-file=.env/nissan.env
+      - flutter build ipa
     artifacts:
       - build/ios/ipa/*.ipa
