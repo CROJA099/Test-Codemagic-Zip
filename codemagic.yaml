@@ -6,8 +6,11 @@ workflows:
       android_signing:
         - mazda_key
       groups:
-        - Mazda 
+        - Mazda
       
+      vars:
+        CLIENT_ASSETS_FOLDER: client_assets
+        ANDROID_ASSETS_FOLDER: android_assets
     scripts:
       - flutter clean
       - flutter pub get
@@ -24,14 +27,16 @@ workflows:
       - name: Change Android app name
         script: sed -i.bak "s/android:label=\".*\"/android:label=\"$APP_NAME\"/g" android/app/src/main/AndroidManifest.xml
 
-      - name: Unzip Mazda icons
-        script: unzip -o assets/zips/assets_mazda.zip -d android/app/src/main/res/
+      - name: Unzip Assets
+        script: unzip -o assets/zips/assets_mazda.zip -d $CLIENT_ASSETS_FOLDER
+        script: cp -r ./$CLIENT_ASSETS_FOLDER/$ANDROID_ASSETS_FOLDER/* ./android/app/src/main/res
+        script: cp -r ./$CLIENT_ASSETS_FOLDER/images/* ./assets
 
       - name: Validate icons
         script: ls -R android/app/src/main/res/mipmap-*
   
 
-      - flutter build apk
+      - flutter build apk --dart-define-from-file=.env/mazda.env
 
     artifacts:
       - build/**/outputs/apk/**/*.apk
@@ -55,8 +60,15 @@ workflows:
     name: Nissan APK Workflow
     environment:
       flutter: stable
+      android_signing:
+        - nissan_key
+      
       groups:
-        - Nissan 
+        - Nissan
+
+      vars:
+        CLIENT_ASSETS_FOLDER: client_assets
+        ANDROID_ASSETS_FOLDER: android_assets 
       
     scripts:
       - flutter clean
@@ -74,10 +86,12 @@ workflows:
       - name: Change Android app name
         script: sed -i.bak "s/android:label=\".*\"/android:label=\"$APP_NAME\"/g" android/app/src/main/AndroidManifest.xml
       
-      - name: Unzip Nissan icons
-        script: unzip -o assets/zips/assets_nissan.zip -d android/app/src/main/res/
+      - name: Unzip Assets
+        script: unzip -o assets/zips/assets_nissan.zip -d $CLIENT_ASSETS_FOLDER
+        script: cp -r ./$CLIENT_ASSETS_FOLDER/$ANDROID_ASSETS_FOLDER/* ./android/app/src/main/res
+        script: cp -r ./$CLIENT_ASSETS_FOLDER/images/* ./assets
 
-      - flutter build apk
+      - flutter build apk --dart-define-from-file=.env/nissan.env
       
     artifacts:
       - build/**/outputs/apk/**/*.apk
