@@ -88,7 +88,11 @@ workflows:
       
       - name: Unzip Assets
         script: unzip -o assets/zips/assets_nissan.zip -d $CLIENT_ASSETS_FOLDER
+        
+      - name: Replace Icons
         script: cp -r ./$CLIENT_ASSETS_FOLDER/$ANDROID_ASSETS_FOLDER/* ./android/app/src/main/res
+
+      - name: Replace Images
         script: cp -r ./$CLIENT_ASSETS_FOLDER/images/* ./assets
 
       - flutter build apk --dart-define-from-file=.env/nissan.env
