@@ -14,7 +14,12 @@ class MyApp extends StatelessWidget {
           title: const Text('Material App Bar'),
         ),
         body: const Center(
-          child: Text('Hello World'),
+          child: Column(
+            children: [
+              Image(image: AssetImage(String.fromEnvironment("APP_ICON", defaultValue: ""))),
+              Text('Hello World'),
+            ],
+          ),
         ),
       ),
     );
