@@ -53,10 +53,24 @@ workflows:
       cocoapods: default
       groups:
         - Mazda 
+      vars:
+        CLIENT_ASSETS_FOLDER: client_assets      # Carpeta temporal donde se descomprime el ZIP
+        IOS_ASSETS_FOLDER: ios_assets            # Carpeta dentro del ZIP para los assets de iOS
     scripts:
       - flutter clean
       - flutter pub get
-      - flutter build ipa
+
+      - name: Unzip Assets
+        script: unzip -o assets/zips/assets_mazda.zip -d $CLIENT_ASSETS_FOLDER
+
+      - name: Replace iOS Icons and Assets
+        script: cp -r ./$CLIENT_ASSETS_FOLDER/$IOS_ASSETS_FOLDER/* ./ios/Runner/Assets.xcassets/
+
+      - name: Validate iOS Assets
+        script: ls -R ios/Runner/Assets.xcassets/
+
+      - flutter build ipa --dart-define-from-file=.env/mazda.env
+
     artifacts:
       - build/ios/ipa/*.ipa
 
@@ -108,11 +122,27 @@ workflows:
     name: Nissan IPA Workflow
     environment:
       flutter: stable
+      xcode: latest
+      cocoapods: default
       groups:
         - Nissan 
+      vars:
+        CLIENT_ASSETS_FOLDER: client_assets      # Carpeta temporal donde se descomprime el ZIP
+        IOS_ASSETS_FOLDER: ios_assets            # Carpeta dentro del ZIP para los assets de iOS
     scripts:
       - flutter clean
       - flutter pub get
-      - flutter build ipa
+
+      - name: Unzip Assets
+        script: unzip -o assets/zips/assets_nissan.zip -d $CLIENT_ASSETS_FOLDER
+
+      - name: Replace iOS Icons and Assets
+        script: cp -r ./$CLIENT_ASSETS_FOLDER/$IOS_ASSETS_FOLDER/* ./ios/Runner/Assets.xcassets/
+
+      - name: Validate iOS Assets
+        script: ls -R ios/Runner/Assets.xcassets/
+
+      - flutter build ipa --dart-define-from-file=.env/nissan.env
+
     artifacts:
       - build/ios/ipa/*.ipa
