@@ -47,7 +47,6 @@ app.*.map.json
 
 
 /android/app/src/*
-assets/icons/*
-assets/backgrounds/*
+assets/*
 
 ios/Runner/Assets.xcassets/AppIcon.appiconset/*
