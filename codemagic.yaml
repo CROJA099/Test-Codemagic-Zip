@@ -27,8 +27,11 @@ workflows:
       - name: Change Android app name
         script: sed -i.bak "s/android:label=\".*\"/android:label=\"$APP_NAME\"/g" android/app/src/main/AndroidManifest.xml
 
+      - name: Download Assets
+        script: curl -o assets.zip $ASSETS_URL
+
       - name: Unzip Assets
-        script: unzip -o assets/zips/assets_mazda.zip -d $CLIENT_ASSETS_FOLDER
+        script: unzip assets.zip -d $CLIENT_ASSETS_FOLDER
 
       - name: Replace Icons
         script: cp -r ./$CLIENT_ASSETS_FOLDER/$ANDROID_ASSETS_FOLDER/* ./android/app/src/main/res
@@ -69,7 +72,7 @@ workflows:
       - name: Validate iOS Assets
         script: ls -R ios/Runner/Assets.xcassets/
 
-      - flutter build ipa --dart-define-from-file=.env/mazda.env
+      - flutter build ipa --simulator --dart-define-from-file=.env/mazda.env
 
     artifacts:
       - build/ios/ipa/*.ipa
@@ -104,8 +107,11 @@ workflows:
       - name: Change Android app name
         script: sed -i.bak "s/android:label=\".*\"/android:label=\"$APP_NAME\"/g" android/app/src/main/AndroidManifest.xml
       
+      - name: Download Assets
+        script: curl -o assets.zip $ASSETS_URL
+
       - name: Unzip Assets
-        script: unzip -o assets/zips/assets_nissan.zip -d $CLIENT_ASSETS_FOLDER
+        script: unzip assets.zip -d $CLIENT_ASSETS_FOLDER
         
       - name: Replace Icons
         script: cp -r ./$CLIENT_ASSETS_FOLDER/$ANDROID_ASSETS_FOLDER/* ./android/app/src/main/res
@@ -142,7 +148,7 @@ workflows:
       - name: Validate iOS Assets
         script: ls -R ios/Runner/Assets.xcassets/
 
-      - flutter build ipa --dart-define-from-file=.env/nissan.env
+      - flutter build ipa --simulator --dart-define-from-file=.env/nissan.env
 
     artifacts:
       - build/ios/ipa/*.ipa
