@@ -36,12 +36,11 @@ workflows:
       - name: Replace Icons
         script: cp -r ./$CLIENT_ASSETS_FOLDER/$ANDROID_ASSETS_FOLDER/* ./android/app/src/main/res
       
+      - name: Create Assets Directory
+        script: mkdir -p ./assets
+
       - name: Replace Images
         script: cp -r ./$CLIENT_ASSETS_FOLDER/images/* ./assets
-
-      - name: Validate icons
-        script: ls -R android/app/src/main/res/mipmap-*
-  
 
       - flutter build apk --dart-define-from-file=.env/mazda.env
 
@@ -115,7 +114,10 @@ workflows:
         
       - name: Replace Icons
         script: cp -r ./$CLIENT_ASSETS_FOLDER/$ANDROID_ASSETS_FOLDER/* ./android/app/src/main/res
-
+      
+      - name: Create Assets Directory
+        script: mkdir -p ./assets
+        
       - name: Replace Images
         script: cp -r ./$CLIENT_ASSETS_FOLDER/images/* ./assets
 
