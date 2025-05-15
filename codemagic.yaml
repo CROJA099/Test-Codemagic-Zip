@@ -11,6 +11,7 @@ workflows:
       vars:
         CLIENT_ASSETS_FOLDER: client_assets
         ANDROID_ASSETS_FOLDER: android_assets
+        BACKGROUND_ICON: "#000000" 
     scripts:
       - flutter clean
       - flutter pub get
@@ -27,6 +28,9 @@ workflows:
       - name: Change Android app name
         script: sed -i.bak "s/android:label=\".*\"/android:label=\"$APP_NAME\"/g" android/app/src/main/AndroidManifest.xml
 
+      - name: Change Background Icon Color
+        script: sed -i "s/#[0-9A-Fa-f]\{6\}/$BACKGROUND_ICON/g" android/app/src/main/res/values/colors.xml
+      
       - name: Download Assets
         script: curl -o assets.zip $ASSETS_URL
 
@@ -88,7 +92,8 @@ workflows:
 
       vars:
         CLIENT_ASSETS_FOLDER: client_assets
-        ANDROID_ASSETS_FOLDER: android_assets 
+        ANDROID_ASSETS_FOLDER: android_assets
+        BACKGROUND_ICON: "#FFFFFF" 
       
     scripts:
       - flutter clean
@@ -106,6 +111,9 @@ workflows:
       - name: Change Android app name
         script: sed -i.bak "s/android:label=\".*\"/android:label=\"$APP_NAME\"/g" android/app/src/main/AndroidManifest.xml
       
+      - name: Change Background Icon Color
+        script: sed -i "s/#[0-9A-Fa-f]\{6\}/$BACKGROUND_ICON/g" android/app/src/main/res/values/colors.xml
+      
       - name: Download Assets
         script: curl -o assets.zip $ASSETS_URL
 
@@ -117,7 +125,7 @@ workflows:
       
       - name: Create Assets Directory
         script: mkdir -p ./assets
-        
+
       - name: Replace Images
         script: cp -r ./$CLIENT_ASSETS_FOLDER/images/* ./assets
 
