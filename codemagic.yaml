@@ -29,7 +29,7 @@ workflows:
         script: sed -i.bak "s/android:label=\".*\"/android:label=\"$APP_NAME\"/g" android/app/src/main/AndroidManifest.xml
 
       - name: Debug Background Icon Value
-        script: echo "BACKGROUND_ICON is: $BACKGROUND_ICON"
+        script: echo "BACKGROUND_ICON is $BACKGROUND_ICON"
 
       - name: Change Background Icon Color
         script: sed -i "s/#FF0000/$BACKGROUND_ICON/g" android/app/src/main/res/values/colors.xml
