@@ -30,9 +30,6 @@ workflows:
 
       - name: Debug Background Icon Value
         script: echo "BACKGROUND_ICON is $BACKGROUND_ICON"
-      
-      - name: Debug Sed Version
-        script: sed --version || sed -h
 
       - name: Change Background Icon Color
         script: sed -i '' 's/#FF0000/#000000/g' android/app/src/main/res/values/colors.xml || sed -i 's/#FF0000/#000000/g' android/app/src/main/res/values/colors.xml
