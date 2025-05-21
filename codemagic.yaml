@@ -32,7 +32,7 @@ workflows:
         script: echo "BACKGROUND_ICON is $BACKGROUND_ICON"
 
       - name: Change Background Icon Color
-        script: sed -i.bak 's/<color name="\([^"]*\)">#FF0000<\/color>/<color name="\1">#000000<\/color>/g' android/app/src/main/res/values/colors.xml
+        script: sed -i 's/<color name="\([^"]*\)">#FF0000<\/color>/<color name="\1">#000000<\/color>/g' android/app/src/main/res/values/colors.xml
 
       
       - name: Download Assets
