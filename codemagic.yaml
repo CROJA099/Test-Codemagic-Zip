@@ -84,20 +84,18 @@ workflows:
       - build/ios/ipa/*.ipa
 
   nissan_android:
-    name: Nissan APK Workflow
+    name: Mazda APK Workflow
     environment:
       flutter: stable
       android_signing:
-        - nissan_key
-      
+        - mazda_key
       groups:
-        - Nissan
-
+        - Mazda
+      
       vars:
         CLIENT_ASSETS_FOLDER: client_assets
         ANDROID_ASSETS_FOLDER: android_assets
-        BACKGROUND_ICON: "FFFFFF" 
-      
+        BACKGROUND_ICON: "000000" 
     scripts:
       - flutter clean
       - flutter pub get
@@ -109,11 +107,11 @@ workflows:
           keyPassword=$CM_KEY_PASSWORD
           keyAlias=$CM_KEY_ALIAS
           storeFile=$CM_KEYSTORE_PATH
-          EOF
+          EOF 
 
       - name: Change Android app name
         script: sed -i.bak "s/android:label=\".*\"/android:label=\"$APP_NAME\"/g" android/app/src/main/AndroidManifest.xml
-      
+
       - name: Debug Background Icon Value
         script: echo "BACKGROUND_ICON is $BACKGROUND_ICON"
 
@@ -125,7 +123,7 @@ workflows:
 
       - name: Unzip Assets
         script: unzip assets.zip -d $CLIENT_ASSETS_FOLDER
-        
+
       - name: Replace Icons
         script: cp -r ./$CLIENT_ASSETS_FOLDER/$ANDROID_ASSETS_FOLDER/* ./android/app/src/main/res
       
@@ -136,7 +134,7 @@ workflows:
         script: cp -r ./$CLIENT_ASSETS_FOLDER/images/* ./assets
 
       - flutter build apk --dart-define-from-file=.env/nissan.env
-      
+
     artifacts:
       - build/**/outputs/apk/**/*.apk
 
