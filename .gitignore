@@ -50,4 +50,3 @@ app.*.map.json
 assets/*
 
 ios/Runner/Assets.xcassets/AppIcon.appiconset/*
-lib/firebase_options.dart
