@@ -118,7 +118,7 @@ workflows:
         script: echo "BACKGROUND_ICON is $BACKGROUND_ICON"
 
       - name: Change Background Icon Color
-        script: sed -i '' 's/#FF0000/#FFFFFF/g' android/app/src/main/res/values/colors.xml
+        script: sed -i '' 's/#FF0000/#FFFFFF/g' android/app/src/main/res/values/colors.xml || sed -i 's/#FF0000/#FFFFFF/g' android/app/src/main/res/values/colors.xml
 
       - name: Download Assets
         script: curl -o assets.zip $ASSETS_URL
