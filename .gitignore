@@ -50,3 +50,7 @@ app.*.map.json
 assets/*
 
 ios/Runner/Assets.xcassets/AppIcon.appiconset/*
+
+# Firebase keys
+/android/app/google-services.json
+/ios/Runner/GoogleService-Info.plist
