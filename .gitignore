@@ -46,7 +46,8 @@ app.*.map.json
 
 
 
-/android/app/src/*
+android/app/src/main/res/mipmap-*/**/*.png
+android/app/src/main/res/drawable-*/**/*.png
 assets/*
 
 ios/Runner/Assets.xcassets/AppIcon.appiconset/*
