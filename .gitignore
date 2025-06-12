@@ -57,4 +57,4 @@ ios/Runner/Assets.xcassets/AppIcon.appiconset/*
 /ios/Runner/GoogleService-Info.plist
 
 # Environment variables
-/.env/*
+/.env/
