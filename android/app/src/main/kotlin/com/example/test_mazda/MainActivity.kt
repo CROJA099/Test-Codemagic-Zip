@@ -1,4 +1,4 @@
-package com.example.test_codemagic_zip
+package com.example.test_mazda
 
 import io.flutter.embedding.android.FlutterActivity
 
